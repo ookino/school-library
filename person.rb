@@ -1,15 +1,22 @@
+require './corrector'
 class Person
-  def initialize(_id, age, name = 'unknown', parent_permission: true)
-    @id = Random.rand(1..1000)
-    @name = name
-    @age = age
-    @parent_permission = parent_permission
-  end
-  attr_reader :id
   attr_accessor :name, :age
+  attr_reader :id
+
+  def initialize(age, name = 'Unknown', parent_permission: true)
+    @id = Random.rand(1..1000)
+    @age = age
+    @name = name
+    @parent_permission = parent_permission
+    @corrector = Corrector.new
+  end
 
   def can_use_service
     of_age || parent_permission == true
+  end
+
+  def validate_name
+    @name = @corrector.correct_name(name)
   end
 
   private

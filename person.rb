@@ -9,6 +9,7 @@ class Person
     @name = name
     @parent_permission = parent_permission
     @corrector = Corrector.new
+    @rentals = []
   end
 
   def can_use_service
@@ -17,6 +18,10 @@ class Person
 
   def validate_name
     @name = @corrector.correct_name(name)
+  end
+
+  def add_rental(rental)
+    rentals.push(rental)
   end
 
   private

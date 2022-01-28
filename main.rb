@@ -1,3 +1,4 @@
+# rubocop:disable Metrics
 require './book'
 require './classroom'
 require './rental'
@@ -48,7 +49,6 @@ class App
     when '7'
       'yes'
     else
-      puts 'Option Invalid'
       puts 'Please enter a number between 1 and 7'
     end
   end
@@ -171,4 +171,5 @@ def main
   app = App.new
   app.start
 end
+# rubocop:enable Metrics
 main

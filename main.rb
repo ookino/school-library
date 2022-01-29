@@ -89,10 +89,10 @@ class App
   end
 
   def create_book
-    print 'Title '
+    print 'Title: '
     title = gets.chomp
 
-    print 'Author '
+    print 'Author: '
     author = gets.chomp
 
     book = Book.new(title, author)
@@ -129,7 +129,7 @@ class App
     puts person_index
     print 'Date: '
     date = gets.chomp
-    @rentals << Rental.new(date, @books[book_index], @people[person_index])
+    @rentals << Rental.new(date, @people[person_index], @books[book_index])
     puts 'Rental created successfully'
     sleep 1
     puts
@@ -137,7 +137,6 @@ class App
   end
 
   def rentals_by_id
-    puts @rentals
     print 'ID of person: '
     id = gets.chomp.to_i
     puts 'Rentals:'

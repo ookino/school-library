@@ -22,3 +22,13 @@ def menu
     puts "#{key} - #{value}"
   end
   user_option = gets.chomp
+
+  if user_option == '7'
+    abort('Thank you for using our Library!')
+  else
+    @app.get_user_option(user_option)
+    puts
+    menu
+  end
+end
+main

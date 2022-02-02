@@ -4,6 +4,7 @@ require './rental'
 require './person'
 require './student'
 require './teacher'
+require 'json'
 
 class App
   def initialize
@@ -77,6 +78,40 @@ class App
     puts
   end
 
+  def save_files
+    File.write('book.json', JSON.generate(@books)) if @books.any?
+    File.write('people.json', JSON.generate(@people)) if @people.any?
+    File.write('rental.json', JSON.generate(@rentals)) if @rentals.any?
+  end
+
+  def load_files
+    if File.exist?('people.json')
+      JSON.parse(File.read('people.json')).map do |person|
+        if person['json_class'] == 'Student'
+          load_student(person)
+        else
+          load_teacher(person)
+        end
+      end
+    else
+      @people = []
+    end
+    if File.exist?('book.json')
+      JSON.parse(File.read('book.json')).map do |book|
+        load_book(book)
+      end
+    else
+      @books = []
+    end
+    if File.exist?('rental.json')
+      JSON.parse(File.read('rental.json')).map do |rental|
+        load_rental(rental)
+      end
+    else
+      @rentals = []
+    end
+  end
+
   private
 
   def user_input(label = '', type = 'int')
@@ -128,5 +163,38 @@ class App
     puts
     puts 'Teacher created successfully'
     puts
+  end
+
+  def load_book(book)
+    b = Book.new(book['title'], book['author'])
+    @books.push(b)
+  end
+
+  def load_teacher(person)
+    id = person['id'].to_i
+    name = person['name']
+    age = person['age']
+    specialization = person['specialization']
+
+    teacher = Teacher.new(name, age, specialization)
+    teacher.id = id
+    @people.push(teacher)
+  end
+
+  def load_student(person)
+    id = person['id'].to_i
+    name = person['name']
+    age = person['age']
+    parent_permission = person['parent_permission']
+
+    student = Student.new(name, age, parent_permission)
+    student.id = id
+    @people.push(student)
+  end
+
+  def load_rental(rental)
+    book = @books.find { |boo| boo.title == rental['book'] }
+    person = @people.find { |per| per.id == rental['person'].to_i }
+    @rentals.push(Rental.new(rental['date'], person, book))
   end
 end

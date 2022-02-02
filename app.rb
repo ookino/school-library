@@ -6,6 +6,10 @@ require './student'
 require './teacher'
 require 'json'
 
+# rubocop:disable Metrics/ClassLength
+# rubocop:disable Style/GuardClause
+# rubocop:disable Metrics/PerceivedComplexity
+# rubocop:disable Metrics/CyclomaticComplexity
 class App
   def initialize
     @books = []
@@ -93,22 +97,18 @@ class App
           load_teacher(person)
         end
       end
-    else
-      @people = []
+
     end
     if File.exist?('book.json')
       JSON.parse(File.read('book.json')).map do |book|
         load_book(book)
       end
-    else
-      @books = []
+
     end
     if File.exist?('rental.json')
       JSON.parse(File.read('rental.json')).map do |rental|
         load_rental(rental)
       end
-    else
-      @rentals = []
     end
   end
 
@@ -198,3 +198,8 @@ class App
     @rentals.push(Rental.new(rental['date'], person, book))
   end
 end
+
+# rubocop:enable Metrics/ClassLength
+# rubocop:enable Style/GuardClause
+# rubocop:enable Metrics/PerceivedComplexity
+# rubocop:enable Metrics/CyclomaticComplexity

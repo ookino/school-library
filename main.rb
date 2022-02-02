@@ -3,6 +3,7 @@ require './app'
 class Main
   def initialize
     @app = App.new
+    @app.load_files
     @options = {
       1 => 'List books',
       2 => 'List people',
@@ -49,6 +50,7 @@ class Main
     display_options
     option = gets.chomp.to_i
     if option == 7
+      @app.save_files
       puts '....exiting'
       sleep 0.1
       abort('Thank you for using the Library School App!')

@@ -2,8 +2,8 @@ require_relative '../classroom'
 require_relative '../student'
 
 describe Classroom do
-  context "when testing the student class" do
-    before (:each) do
+  context 'when testing the student class' do
+    before(:each) do
       @classroom = Classroom.new('Literature')
       @student = Student.new('Ariel', 33, @classroom)
     end
@@ -13,7 +13,7 @@ describe Classroom do
     end
 
     it 'classroom label should match' do
-      expect(@classroom.label).to eq ('Literature')
+      expect(@classroom.label).to eq('Literature')
     end
 
     it 'has 1 student' do

@@ -1,6 +1,9 @@
 require_relative '../corrector'
 
 describe Corrector do
+  before(:each) do
+    @corrector = Corrector.new
+  end
   it 'should correct name' do
     correct = Corrector.new
     name = 'corrections'
